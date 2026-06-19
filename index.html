@@ -207,9 +207,9 @@
     <div class="masthead">
         <div class="crest">INTEGR<span>IA</span></div>
         <div class="rule"></div>
-        <h1>Anatomía Humana</h1>
-        <p class="subtitle">Entrenador Deportivo · Universidad Viña del Mar</p>
-        <span class="course-code">EDEP 1012</span>
+        <h1 id="courseTitle">Anatomía Humana</h1>
+        <p class="subtitle" id="courseSubtitle">Universidad Viña del Mar</p>
+        <span class="course-code" id="courseCode">UVM</span>
     </div>
 
     <!-- ERROR (link sin malla válida) -->
@@ -280,8 +280,8 @@
     </div><!-- /mainContent -->
 
     <div class="colophon">
-        <strong>INTEGRIA</strong> · Universidad Viña del Mar · Entrenador Deportivo<br>
-        Proyecto de Apoyo Académico · EDEP 1012 · Anatomía Humana · 2026
+        <strong>INTEGRIA</strong> · Universidad Viña del Mar<br>
+        <span id="colophonCourse">Proyecto de Apoyo Académico · Anatomía Humana · 2026</span>
     </div>
 
 </div>
@@ -305,6 +305,21 @@ const DOCS_BY_MALLA = {
 const EXAM_DATES = {
     antigua: { label: 'Certamen 4 · 2 de julio 2026', date: new Date('2026-07-02') },
     innovada: { label: 'Evaluación · 26 de junio 2026', date: new Date('2026-06-26') }
+};
+
+const CURSO_INFO = {
+    antigua: {
+        titulo: 'Anatomía Humana',
+        subtitulo: 'Entrenador Deportivo · Universidad Viña del Mar',
+        codigo: 'EDEP 1012',
+        colofon: 'Proyecto de Apoyo Académico · EDEP 1012 · Anatomía Humana · 2026'
+    },
+    innovada: {
+        titulo: 'Anatomía del Aparato Locomotor',
+        subtitulo: 'Universidad Viña del Mar · NRC 702',
+        codigo: 'FCDV1006',
+        colofon: 'Proyecto de Apoyo Académico · FCDV1006 NRC 702 · Anatomía del Aparato Locomotor · 2026'
+    }
 };
 
 function getSemana() {
@@ -333,7 +348,15 @@ async function init() {
     }
 
     document.getElementById('mainContent').style.display = 'block';
-    document.getElementById('welcomeMalla').textContent = `Malla ${malla.charAt(0).toUpperCase() + malla.slice(1)}`;
+
+    // Nombres de curso por malla
+    const curso = CURSO_INFO[malla];
+    document.getElementById('courseTitle').textContent = curso.titulo;
+    document.getElementById('courseSubtitle').textContent = curso.subtitulo;
+    document.getElementById('courseCode').textContent = curso.codigo;
+    document.getElementById('welcomeMalla').textContent = curso.codigo;
+    document.getElementById('colophonCourse').textContent = curso.colofon;
+    document.querySelector('.q-label').textContent = `${curso.titulo} · ${curso.codigo}`;
 
     const semana = getSemana();
 
