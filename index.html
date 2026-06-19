@@ -1,0 +1,406 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>EDEP 1012 · Anatomía Humana | Apoyo Académico</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --ink: #0d1b2a;
+            --ink-light: #1b3147;
+            --paper: #fdfcf9;
+            --paper-warm: #f8f5f0;
+            --gold: #b8860b;
+            --gold-light: #d4a843;
+            --gold-pale: #f9f3e3;
+            --text: #1a1a1a;
+            --text-soft: #5c5c5c;
+            --text-muted: #7a7a7a;
+            --border: #e0dcd5;
+            --border-light: #ede9e2;
+            --shadow-sm: 0 1px 4px rgba(0,0,0,0.04);
+            --shadow-md: 0 4px 16px rgba(0,0,0,0.06);
+            --radius-sm: 6px;
+            --radius-md: 10px;
+            --radius-lg: 14px;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', -apple-system, system-ui, sans-serif;
+            background: var(--paper);
+            color: var(--text);
+            line-height: 1.7;
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+        }
+        .container { max-width: 760px; margin: 0 auto; padding: 2.5rem 1.2rem 4rem; }
+
+        /* ── Masthead ── */
+        .masthead {
+            text-align: center;
+            padding: 2.5rem 1rem 2rem;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 2.5rem;
+        }
+        .masthead .crest {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 3.2rem; font-weight: 700;
+            color: var(--ink); letter-spacing: -0.5px; line-height: 1;
+        }
+        .masthead .crest span { color: var(--gold); }
+        .masthead .rule { width: 50px; height: 3px; background: var(--gold); margin: 0.8rem auto 1rem; }
+        .masthead h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.7rem; font-weight: 600; color: var(--ink); margin-bottom: 0.3rem;
+        }
+        .masthead .subtitle { font-size: 0.8rem; color: var(--text-soft); text-transform: uppercase; letter-spacing: 0.12em; font-weight: 500; }
+        .masthead .course-code {
+            display: inline-block; font-size: 0.7rem; font-weight: 700;
+            letter-spacing: 0.1em; color: var(--gold); border: 1px solid var(--gold);
+            padding: 0.2rem 0.8rem; border-radius: 4px; margin-top: 0.6rem;
+        }
+
+        /* ── Error screen ── */
+        #errorScreen {
+            background: #fff; border: 1px solid var(--border);
+            border-radius: var(--radius-lg); padding: 2.5rem 2rem;
+            box-shadow: var(--shadow-md); max-width: 420px; margin: 0 auto;
+            text-align: center; display: none;
+        }
+        #errorScreen h2 { font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; color: var(--ink); margin-bottom: 0.5rem; }
+        #errorScreen p { font-size: 0.82rem; color: var(--text-muted); }
+
+        /* ── Main content ── */
+        #mainContent { display: none; }
+        .welcome-bar {
+            background: var(--ink); color: #fff;
+            padding: 0.8rem 1.2rem; border-radius: var(--radius-md);
+            margin-bottom: 1.5rem;
+            display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+        }
+        .welcome-bar .wname { font-size: 0.9rem; font-weight: 600; }
+        .welcome-bar .wmalla {
+            font-size: 0.65rem; font-weight: 700; text-transform: uppercase;
+            letter-spacing: 0.1em; color: var(--gold-light);
+        }
+        .btn-logout {
+            background: none; border: 1px solid rgba(255,255,255,0.3);
+            color: rgba(255,255,255,0.7); font-size: 0.7rem; padding: 0.3rem 0.7rem;
+            border-radius: 4px; cursor: pointer; white-space: nowrap; transition: 0.2s;
+        }
+        .btn-logout:hover { border-color: #fff; color: #fff; }
+
+        /* ── Countdown ── */
+        .countdown-banner {
+            background: var(--ink); color: #fff; text-align: center;
+            padding: 1.2rem 1.5rem; border-radius: var(--radius-md); margin-bottom: 2rem;
+        }
+        .countdown-banner .countdown-label { font-size: 0.6rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.15em; opacity: 0.7; margin-bottom: 0.3rem; }
+        .countdown-banner .countdown-date { font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; font-weight: 600; }
+        .countdown-banner .countdown-date span { color: var(--gold-light); }
+        .countdown-banner .days-left { font-size: 0.75rem; opacity: 0.7; margin-top: 0.2rem; }
+
+        /* ── Section ── */
+        .section { margin-bottom: 2.2rem; }
+        .section-label { font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.15em; color: var(--gold); margin-bottom: 0.5rem; }
+        .section-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.35rem; font-weight: 600; color: var(--ink);
+            margin-bottom: 1.1rem; padding-bottom: 0.7rem;
+            border-bottom: 1px solid var(--border-light); line-height: 1.3;
+        }
+
+        /* ── Question ── */
+        .question-block {
+            background: #fff; border: 1px solid var(--border);
+            border-radius: var(--radius-md); padding: 1.6rem 1.7rem; box-shadow: var(--shadow-sm);
+        }
+        .question-block .q-label { font-size: 0.6rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 0.8rem; }
+        .question-block .q-text {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.2rem; font-weight: 500; color: var(--ink); line-height: 1.5; margin-bottom: 1rem;
+        }
+        .question-block .q-answer {
+            font-size: 0.85rem; color: var(--text-soft); line-height: 1.7;
+            display: none; border-left: 3px solid var(--gold-pale); padding-left: 1rem; margin-top: 0.5rem;
+        }
+        .question-block .q-answer.visible { display: block; }
+        .btn-reveal {
+            background: none; border: 1px solid var(--gold); color: var(--gold);
+            font-size: 0.7rem; font-weight: 600; padding: 0.4rem 1rem;
+            border-radius: var(--radius-sm); cursor: pointer; transition: all 0.25s;
+            text-transform: uppercase; letter-spacing: 0.06em;
+        }
+        .btn-reveal:hover { background: var(--gold); color: #fff; }
+
+        /* ── Docs ── */
+        .doc-list { list-style: none; }
+        .doc-item {
+            display: flex; align-items: center; gap: 14px;
+            padding: 0.9rem 1rem; border-bottom: 1px solid var(--border-light);
+            text-decoration: none; color: inherit; transition: background 0.2s; cursor: pointer;
+        }
+        .doc-item:last-child { border-bottom: none; }
+        .doc-item:hover { background: #fdfaf5; }
+        .doc-num {
+            width: 32px; height: 32px; border: 1px solid var(--border); border-radius: 50%;
+            display: grid; place-items: center;
+            font-family: 'Cormorant Garamond', serif; font-size: 1rem; font-weight: 600;
+            color: var(--ink); flex-shrink: 0;
+        }
+        .doc-info { flex: 1; }
+        .doc-name { font-family: 'Cormorant Garamond', serif; font-size: 1rem; font-weight: 600; color: var(--ink); }
+        .doc-desc { font-size: 0.7rem; color: var(--text-muted); }
+        .doc-arrow { color: var(--text-muted); font-size: 0.8rem; transition: 0.2s; }
+        .doc-item:hover .doc-arrow { color: var(--gold); }
+
+        /* ── Tips ── */
+        .tip-item {
+            display: flex; gap: 14px; padding: 0.7rem 0;
+            border-bottom: 1px solid var(--border-light); font-size: 0.85rem; align-items: flex-start;
+        }
+        .tip-item:last-child { border-bottom: none; }
+        .tip-num {
+            font-family: 'Cormorant Garamond', serif;
+            width: 26px; height: 26px; border: 1px solid var(--ink); border-radius: 50%;
+            display: grid; place-items: center; font-size: 0.85rem; font-weight: 600;
+            color: var(--ink); flex-shrink: 0;
+        }
+        .tip-body { font-size: 0.82rem; color: var(--text-soft); line-height: 1.6; }
+
+        /* ── Loading ── */
+        .loading-state { text-align: center; padding: 3rem 1rem; color: var(--text-muted); }
+        .loading-state .spinner {
+            width: 32px; height: 32px; border: 2px solid var(--border);
+            border-top-color: var(--gold); border-radius: 50%;
+            animation: spin 0.8s linear infinite; margin: 0 auto 1rem;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* ── Colophon ── */
+        .colophon {
+            text-align: center; padding-top: 2rem; margin-top: 2rem;
+            border-top: 1px solid var(--border); font-size: 0.68rem;
+            color: var(--text-muted); letter-spacing: 0.05em; line-height: 1.8;
+        }
+        .colophon strong { color: var(--ink); font-weight: 600; }
+
+        @media (max-width: 500px) {
+            .container { padding: 1.5rem 0.8rem 3rem; }
+            .masthead { padding: 1.5rem 0.5rem 1.2rem; }
+            .masthead .crest { font-size: 2.4rem; }
+            .masthead h1 { font-size: 1.3rem; }
+            .section-title { font-size: 1.15rem; }
+            .question-block { padding: 1.2rem; }
+            .question-block .q-text { font-size: 1.05rem; }
+            #loginScreen { padding: 1.8rem 1.2rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <!-- MASTHEAD -->
+    <div class="masthead">
+        <div class="crest">INTEGR<span>IA</span></div>
+        <div class="rule"></div>
+        <h1>Anatomía Humana</h1>
+        <p class="subtitle">Entrenador Deportivo · Universidad Viña del Mar</p>
+        <span class="course-code">EDEP 1012</span>
+    </div>
+
+    <!-- ERROR (link sin malla válida) -->
+    <div id="errorScreen">
+        <h2>Link inválido</h2>
+        <p>Este enlace no contiene información de malla. Usa el link que llegó a tu WhatsApp o SMS.</p>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="mainContent">
+
+        <!-- Barra de malla -->
+        <div class="welcome-bar">
+            <div>
+                <div class="wname">Apoyo Académico · Anatomía Humana</div>
+                <div class="wmalla" id="welcomeMalla"></div>
+            </div>
+        </div>
+
+        <!-- Loading -->
+        <div id="loadingState" class="loading-state">
+            <div class="spinner"></div>
+            <p>Cargando contenido de la semana…</p>
+        </div>
+
+        <!-- Contenido dinámico -->
+        <div id="dynamicContent" style="display:none">
+
+            <!-- Countdown -->
+            <div class="countdown-banner" id="countdownBanner">
+                <div class="countdown-label">Próxima evaluación</div>
+                <div class="countdown-date" id="countdownDate"></div>
+                <div class="days-left" id="daysLeft"></div>
+            </div>
+
+            <!-- Semana -->
+            <div style="margin-bottom:1.5rem">
+                <span style="font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;color:var(--text-muted)">Semana <span id="semanaNum"></span> de 5</span>
+            </div>
+
+            <!-- Pregunta -->
+            <div class="section">
+                <div class="section-label">Evaluación</div>
+                <div class="section-title">Pregunta de la Semana</div>
+                <div class="question-block">
+                    <div class="q-label">Anatomía Humana · EDEP 1012</div>
+                    <div class="q-text" id="preguntaText"></div>
+                    <div class="q-answer" id="respuestaText"></div>
+                    <button class="btn-reveal" id="btnReveal" onclick="revealAnswer()">Revelar respuesta</button>
+                </div>
+            </div>
+
+            <!-- Tips -->
+            <div class="section">
+                <div class="section-label">Metodología</div>
+                <div class="section-title">Estrategias de Estudio · Semana <span id="semanaNumTips"></span></div>
+                <div id="tipsContainer"></div>
+            </div>
+
+            <!-- Documentos -->
+            <div class="section">
+                <div class="section-label">Recursos</div>
+                <div class="section-title">Material de Estudio</div>
+                <ul class="doc-list" id="docList"></ul>
+            </div>
+
+        </div><!-- /dynamicContent -->
+    </div><!-- /mainContent -->
+
+    <div class="colophon">
+        <strong>INTEGRIA</strong> · Universidad Viña del Mar · Entrenador Deportivo<br>
+        Proyecto de Apoyo Académico · EDEP 1012 · Anatomía Humana · 2026
+    </div>
+
+</div>
+
+<script>
+const SUPABASE_URL = 'https://dhdibensbvqgojmhdetr.supabase.co';
+const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRoZGliZW5zYnZxZ29qbWhkZXRyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc3ODEwMzcsImV4cCI6MjA5MzM1NzAzN30.ukJdJq80ESPMAF3eUjHmhxTxFdeEZ9aPzuJuwMijnVM';
+
+const DOCS_BY_MALLA = {
+    antigua: [
+        { nombre: 'Generalidades del Sistema Locomotor', desc: 'PDF · 11 páginas', url: 'https://dhdibensbvqgojmhdetr.supabase.co/storage/v1/object/public/anatomia-uvm/malla-antigua/generalidades-sistema-locomotor.pdf' },
+        { nombre: 'Músculos de Extremidad Inferior (EEII)', desc: 'PDF · 59 páginas', url: 'https://dhdibensbvqgojmhdetr.supabase.co/storage/v1/object/public/anatomia-uvm/malla-antigua/eeii-musculo.pdf' },
+        { nombre: 'Artrología', desc: 'Documento Word', url: 'https://dhdibensbvqgojmhdetr.supabase.co/storage/v1/object/public/anatomia-uvm/malla-antigua/artrologia.doc' }
+    ],
+    innovada: [
+        { nombre: 'Manual Locomotor Unidad III — Extremidad Superior', desc: 'PDF · 75 páginas', url: 'https://dhdibensbvqgojmhdetr.supabase.co/storage/v1/object/public/anatomia-uvm/malla-innovada/manual-locomotor-unidad-III.pdf' },
+        { nombre: 'Gymkana 2 Formativo AAL', desc: 'PDF · 11 páginas', url: 'https://dhdibensbvqgojmhdetr.supabase.co/storage/v1/object/public/anatomia-uvm/malla-innovada/gymkana-2-formativo.pdf' }
+    ]
+};
+
+const EXAM_DATES = {
+    antigua: { label: 'Certamen 4 · 2 de julio 2026', date: new Date('2026-07-02') },
+    innovada: { label: 'Evaluación · 26 de junio 2026', date: new Date('2026-06-26') }
+};
+
+function getSemana() {
+    const startDate = new Date('2026-06-22T12:00:00Z');
+    const now = new Date();
+    const diffDays = Math.floor((now - startDate) / (1000 * 60 * 60 * 24));
+    return Math.min(Math.max(Math.ceil((diffDays + 1) / 7), 1), 5);
+}
+
+async function sbGet(table, params) {
+    const qs = new URLSearchParams(params).toString();
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/${table}?${qs}`, {
+        headers: { 'apikey': SUPABASE_ANON, 'Authorization': `Bearer ${SUPABASE_ANON}` }
+    });
+    if (!res.ok) throw new Error(await res.text());
+    return res.json();
+}
+
+async function init() {
+    const params = new URLSearchParams(window.location.search);
+    const malla = params.get('malla');
+
+    if (malla !== 'antigua' && malla !== 'innovada') {
+        document.getElementById('errorScreen').style.display = 'block';
+        return;
+    }
+
+    document.getElementById('mainContent').style.display = 'block';
+    document.getElementById('welcomeMalla').textContent = `Malla ${malla.charAt(0).toUpperCase() + malla.slice(1)}`;
+
+    const semana = getSemana();
+
+    try {
+        const rows = await sbGet('anat_contenido_semanal', { semana: `eq.${semana}`, malla: `eq.${malla}`, select: '*' });
+
+        document.getElementById('loadingState').style.display = 'none';
+        document.getElementById('dynamicContent').style.display = 'block';
+
+        // Countdown
+        const exam = EXAM_DATES[malla];
+        const daysLeft = Math.ceil((exam.date - new Date()) / (1000 * 60 * 60 * 24));
+        document.getElementById('countdownDate').innerHTML = `<span>${exam.label}</span>`;
+        document.getElementById('daysLeft').textContent = daysLeft > 0 ? `Faltan ${daysLeft} días` : '¡Es hoy! Mucho éxito';
+
+        document.getElementById('semanaNum').textContent = semana;
+        document.getElementById('semanaNumTips').textContent = semana;
+
+        if (rows && rows.length > 0) {
+            const c = rows[0];
+            document.getElementById('preguntaText').textContent = c.pregunta;
+            document.getElementById('respuestaText').textContent = c.respuesta;
+
+            const tipsEl = document.getElementById('tipsContainer');
+            tipsEl.innerHTML = '';
+            (c.tips || []).forEach((tip, i) => {
+                const parts = tip.split(':');
+                const strong = parts.length > 1 ? parts[0].trim() : `Tip ${i+1}`;
+                const body = parts.length > 1 ? parts.slice(1).join(':').trim() : tip;
+                tipsEl.innerHTML += `
+                    <div class="tip-item">
+                        <span class="tip-num">${i + 1}</span>
+                        <span><strong>${strong}</strong>: <span class="tip-body">${body}</span></span>
+                    </div>`;
+            });
+        } else {
+            document.getElementById('preguntaText').textContent = 'El contenido de esta semana se está preparando. Vuelve pronto.';
+            document.getElementById('btnReveal').style.display = 'none';
+        }
+
+        const docs = DOCS_BY_MALLA[malla];
+        const docList = document.getElementById('docList');
+        docList.innerHTML = '';
+        docs.forEach((doc, i) => {
+            docList.innerHTML += `
+                <a class="doc-item" href="${doc.url}" target="_blank" rel="noopener">
+                    <span class="doc-num">${i + 1}</span>
+                    <div class="doc-info">
+                        <div class="doc-name">${doc.nombre}</div>
+                        <div class="doc-desc">${doc.desc}</div>
+                    </div>
+                    <span class="doc-arrow"><i class="fas fa-arrow-right"></i></span>
+                </a>`;
+        });
+
+    } catch (e) {
+        document.getElementById('loadingState').innerHTML = '<p style="color:#b91c1c">Error cargando contenido. Recarga la página.</p>';
+        console.error(e);
+    }
+}
+
+function revealAnswer() {
+    document.getElementById('respuestaText').classList.add('visible');
+    document.getElementById('btnReveal').style.display = 'none';
+}
+
+init();
+</script>
+</body>
+</html>
